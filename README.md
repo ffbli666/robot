@@ -20,8 +20,8 @@ robot
 # Quick Start
 ```javascript
 var robot = new Robot("robot 1", 0, 0);
-no1.forward();
-no1.run();
+robot.forward();
+robot.run();
 ```
 # Robot
 
