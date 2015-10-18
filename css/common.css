@@ -1,4 +1,12 @@
+.code_area{
+    display: inline-block;
+}
+
 .code {
-	width: 400px;
-	height: 400px;
+    width: 400px;
+    height: 400px;
+}
+
+.map_area {
+    display: inline-block;
 }

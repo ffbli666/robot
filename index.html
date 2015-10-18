@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+</head>
+<body>
+<div class='code_area'>
+    <div>&lt;script&gt;</div>
+    <textarea id='code' name='code' class='code'>
+var no1= new Robot("no1");
+no1.forward();
+no1.forward();
+no1.forward();
+no1.forward();
+no1.turnLeft();
+no1.forward();
+no1.forward();
+no1.back();
+no1.forward();
+var no2= new Robot("no2", 4, 4);
+no2.back();
+no2.back();
+no2.back();
+no2.back();
+no2.turnRight();
+no2.forward();
+no2.forward();
+</textarea>
+    <div>&lt;/script&gt;</div>
+    <button type=button onclick='run()'> Run! </button>
+</div>
+<div class='map_area'>
+    <canvas id='canvas'></canvas>
+</div>
+</body>
+</html>
+<script src="js/robot.js"></script>
+<script>
+    var map = new Map();
+    map.draw();
+
+    function run() {
+        map.clear();
+        map.draw();
+
+        //run script
+        var script = document.createElement("script");
+        script.text = document.querySelector("#code").value;
+        document.head.appendChild(script).parentNode.removeChild(script);
+        //console.log(document.querySelector("#code").value);
+    };
+</script>
