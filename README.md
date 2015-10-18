@@ -2,6 +2,18 @@ robot
 =====
 用程式操作機器人的遊戲
 
+以前曾經玩過樂高機器人，覺得是很適合學寫程式的工具
+
+不過樂高機器的價錢偏高，也不一定可以讓學校引進
+
+所以有很多這類的網頁程式遊戲，例如 [Code.org](https://code.org/)、[CodeCombat](https://codecombat.com/)
+
+變的只要有網路，就能使用，所以就試著寫一個＿
+
+當然現在還有一些更先進的玩具，整合Arduino，操作搖控車、直升機...等，更有趣更好玩，例如 [Webduino](https://webduino.io/)、[Tickle](https://tickleapp.com/zh-tw/)
+
+發揮 Maker 精神
+
 #Demo Site
 [Demo](http://ffbli.no-ip.org/works/robot/)
 
@@ -25,3 +37,7 @@ robot
 [Screeps](https://screeps.com/)
 
 [FightCode](http://fightcodegame.com/)
+
+[Webduino](https://webduino.io/)
+
+[Tickle](https://tickleapp.com/zh-tw/)
