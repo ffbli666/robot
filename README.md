@@ -14,8 +14,40 @@ robot
 
 發揮 Maker 精神
 
-#Demo Site
+# Demo Site
 [Demo](http://ffbli.no-ip.org/works/robot/)
+
+# Quick Start
+```javascript
+var robot = new Robot("robot 1", 0, 0);
+no1.forward();
+no1.run();
+```
+# Robot
+
+###Constructor
+```javascript
+var robot = new Robot(name, x, y);
+```
+`name`: name of Robot
+
+`x`: X-Coordinate, value is 0~4
+
+`y`: Y-Coordinate, value is 0~4
+
+
+### Function
+
+`forward`：Robot forwards
+
+`backward`：Robot backwards
+
+`turnLeft`：Robot turns left
+
+`turnRight`: Robot turns right
+
+`run`: Robot starts run
+
 
 # 關鍵技術
 
@@ -23,7 +55,7 @@ robot
 
 [canvas](http://www.w3schools.com/tags/ref_canvas.asp)
 
-#相關網站
+# 相關網站
 都是些有趣的網站，很適合邊學程式邊遊戲
 
 [Code.org](https://code.org/)

@@ -3,8 +3,8 @@
     var canvas = document.querySelector("#canvas");
     var canvasSize = 501;
     var gridSize = 100;
-    var maxX = parseInt(canvasSize/gridSize, 10);
-    var maxY = parseInt(canvasSize/gridSize, 10);
+    var maxX = parseInt(canvasSize / gridSize, 10);
+    var maxY = parseInt(canvasSize / gridSize, 10);
     canvas.width = canvas.height = canvasSize;
     var ctx = canvas.getContext("2d");
 
@@ -174,7 +174,7 @@
             setAnimation();
         };
 
-        var back = function () {
+        var backward = function () {
             switch (direction) {
                 case 1: //up
                     y += 1;
@@ -222,7 +222,7 @@
 
         return {
             forward: forward,
-            back: back,
+            backward: backward,
             turnLeft: turnLeft,
             turnRight: turnRight,
             run: run
