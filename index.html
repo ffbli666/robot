@@ -18,8 +18,7 @@ no1.forward();
 no1.turnLeft();
 no1.forward();
 no1.forward();
-no1.back();
-no1.forward();
+no1.run();
 var no2= new Robot("no2", 4, 4);
 no2.back();
 no2.back();
@@ -28,6 +27,7 @@ no2.back();
 no2.turnRight();
 no2.forward();
 no2.forward();
+no2.run();
 </textarea>
     <div>&lt;/script&gt;</div>
     <button type=button onclick='run()'> Run! </button>
@@ -39,17 +39,13 @@ no2.forward();
 </html>
 <script src="js/robot.js"></script>
 <script>
-    var map = new Map();
-    map.draw();
-
     function run() {
-        map.clear();
-        map.draw();
+        Map.clear();
+        Map.draw();
 
         //run script
         var script = document.createElement("script");
         script.text = document.querySelector("#code").value;
         document.head.appendChild(script).parentNode.removeChild(script);
-        //console.log(document.querySelector("#code").value);
     };
 </script>

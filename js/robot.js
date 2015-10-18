@@ -12,7 +12,8 @@
     var Map = function () {
         var clear = function () {
             ctx.clearRect(0, 0, canvasSize, canvasSize);
-        }
+        };
+
         var draw = function () {
             ctx.beginPath();
             ctx.lineWidth = 1;
@@ -23,33 +24,22 @@
                 ctx.lineTo(500.5, i);
             }
             ctx.stroke();
-        }
+        };
+
         return {
             clear: clear,
             draw: draw,
-        }
-    }
+        };
+    };
 
-    var Robot = function(robotName, initX, initY) {
-        var name = robotName;
-        var posX = initX || 0;
-        var posY = initY || 0;
-        var direction = 3;//up, right, down, left
+    //draw animation
+    var Animation = function(imgSrc) {
         var img = document.createElement("img");
-        img.src = "images/robot.png";
-        var init = function () {
-            log("init");
-            draw();
-        };
-
-        var getStatus = function() {
-            return {
-                name: name,
-                posX: posX,
-                posY: posY,
-                direction: direction
-            };
-        };
+        img.src = imgSrc;
+        var frameSize = 30;
+        var imageSize = 98;
+        var status = [];
+        var frames = [];
         /*
             ref: http://creativejs.com/2012/01/day-10-drawing-rotated-images-into-canvas/
         */
@@ -73,95 +63,172 @@
             ctx.restore();
         };
 
-        var draw = function () {
-            console.log(getStatus());
-            //ctx.drawImage(img, posX*100, posY*100);
-            var angle = (direction - 3) * 90;
-            drawRotatedImage(img, posX*100 + 50, posY*100 + 50, angle);
+        var addStatus = function(s) {
+            status.push(s);
         };
 
-        var log  = function ( string ) {
-            console.log( name + ': ' + string );
+        var run = function() {
+            for(var i=0; i<status.length; i++) {
+                var s = status[i];
+                var nextS = status[i+1];
+                if (!nextS) break;
+                //console.log(s);
+
+                //((nextS.direction - 3) * 90 - (s.direction - 3) * 90) / frameSizeframeSize;
+                diffAngle =  (nextS.direction - s.direction) * 90 / frameSize;
+                diffX = (nextS.x - s.x) * gridSize / frameSize;
+                diffY = (nextS.y - s.y) * gridSize / frameSize;
+
+                startAngle = (s.direction - 3) * 90;
+                startX = s.x * gridSize;
+                startY = s.y * gridSize;
+                for (var j=1; j<=frameSize; j++) {
+                    frames.push({
+                        img: img,
+                        x: startX + j*diffX,
+                        y: startY + j*diffY,
+                        angle: startAngle + j*diffAngle
+                    });
+                }
+                setTimeout(function(){
+                    draw();
+                }, 1000/frameSize);
+            }
+        };
+
+        var draw = function(prevFrame) {
+            var frame = frames.shift();
+            if (!frame) return;
+            if (prevFrame) {
+                ctx.clearRect(prevFrame.x, prevFrame.y, prevFrame.x + imageSize, prevFrame.y + imageSize);
+            }
+            //map.clear();
+            map.draw();
+            drawRotatedImage(frame.img, frame.x + 50, frame.y + 50, frame.angle);
+            setTimeout(function(){
+                draw(frame);
+            }, 1000/frameSize);
+        };
+
+        var clearStatus = function() {
+            status = [];
+            frames = [];
+        };
+
+        return {
+            addStatus: addStatus,
+            clearStatus: clearStatus,
+            run: run
+        };
+    };
+    var map = new Map();
+    map.draw();
+
+    var Robot = function(robotName, initX, initY) {
+        var name = robotName;
+        var x = initX || 0;
+        var y = initY || 0;
+        var direction = 3;//up, right, down, left
+        var am = new Animation("images/robot.png");
+        var init = function () {
+            setAnimation();
+            setAnimation();
+        };
+
+        var setAnimation = function () {
+            am.addStatus(getStatus());
+        };
+
+        var getStatus = function() {
+            return {
+                name: name,
+                x: x,
+                y: y,
+                direction: direction
+            };
         };
 
         var forward = function () {
-            log ( 'forward' );
             switch (direction) {
                 case 1: //up
-                    posY -= 1;
-                    if(posY < 0)
-                        posY = 0;
+                    y -= 1;
+                    if(y < 0)
+                        y = 0;
                     break;
                 case 2: //right
-                    posX += 1;
-                    if (posX >= maxX)
-                        posX = maxX - 1;
+                    x += 1;
+                    if (x >= maxX)
+                        x = maxX - 1;
                     break;
                 case 3: //down
-                    posY += 1;
-                    if (posY >= maxY)
-                        posY = maxY - 1;
+                    y += 1;
+                    if (y >= maxY)
+                        y = maxY - 1;
                     break;
                 case 4: //left
-                    posX -= 1;
-                    if (posX < 0)
-                        posX = 0;
+                    x -= 1;
+                    if (x < 0)
+                        x = 0;
                     break;
             }
-            draw();
+            setAnimation();
         };
 
         var back = function () {
-            log ( 'back' );
             switch (direction) {
                 case 1: //up
-                    posY += 1;
-                    if (posY >= maxY)
-                        posY = maxY - 1;
+                    y += 1;
+                    if (y >= maxY)
+                        y = maxY - 1;
                     break;
                 case 2: //right
-                    posX -= 1;
-                    if (posX < 0)
-                        posX = 0;
+                    x -= 1;
+                    if (x < 0)
+                        x = 0;
                     break;
                 case 3: //down
-                    posY -= 1;
-                    if(posY < 0)
-                        posY = 0;
+                    y -= 1;
+                    if(y < 0)
+                        y = 0;
                     break;
                 case 4: //left
-                    posX += 1;
-                    if (posX >= maxX)
-                        posX = maxX - 1;
+                    x += 1;
+                    if (x >= maxX)
+                        x = maxX - 1;
                     break;
             }
-            draw();
+            setAnimation();
         };
 
         var turnLeft = function () {
-            log ( 'turnLeft' );
             direction -= 1;
             if (direction <= 0)
                 direction = 4;
-            draw();
+            am.addStatus(getStatus());
         };
 
         var turnRight = function () {
-            log ( 'turnRight' );
             direction += 1;
             if (direction > 4)
                 direction = 1;
-            draw();
+            setAnimation();
         };
+
+        var run = function() {
+            am.run();
+        };
+
         init();
+
         return {
             forward: forward,
             back: back,
             turnLeft: turnLeft,
-            turnRight: turnRight
+            turnRight: turnRight,
+            run: run
         };
     }
 
-    window.Map = Map;
+    window.Map = map;
     window.Robot = Robot;
 })();
