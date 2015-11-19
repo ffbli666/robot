@@ -15,7 +15,7 @@ robot
 發揮 Maker 精神
 
 # Demo Site
-[Demo](http://ffbli.no-ip.org/works/robot/)
+[Demo](http://ffbli666.github.io/robot/)
 
 # Quick Start
 ```javascript
